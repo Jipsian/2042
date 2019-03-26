@@ -6,7 +6,6 @@
 		var round = 1;
 
 		var size = $('#select option:selected').val();
-		console.log("size", size);
 
 		/* CREATE / REFRESH GRID */
 
@@ -67,7 +66,6 @@
 			var secondPosition = Math.round(Math.random() * (size - 1));			
 			var thirdPosition = Math.round(Math.random() * (size - 1));
 			var fourthPosition = Math.round(Math.random() * (size - 1));
-			console.log(firstPosition, secondPosition, thirdPosition, fourthPosition);
 
 			$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(firstNumber);
 
@@ -94,6 +92,7 @@
 					}
 				}
 			}
+			addColorsToBlock(size);
 		}
 
 
@@ -144,6 +143,7 @@
 					}
 				}
 			}
+			addColorsToBlock(size);
 		}
 
 
@@ -156,11 +156,38 @@
 
 		/* BLOCK COLOR DEPENDING ON NUMBER */
 
-		function addColorsToBlock () {
-
+		function addColorsToBlock (size) {
+			for (var rows = 0; rows < size; rows++) {
+		        for (var columns = 0; columns < size; columns++) {
+		        	if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "2")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffff99");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "4")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffff66");		        		
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "8")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffff00");		        		
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "16")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffcc00");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "32")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ff9900");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "64")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ff3300");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "128")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#cc3300");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "256")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ff0000");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "512")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#cc0000");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "1024")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#990000");
+		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "2048")) {
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#800000");
+		        	}
+		        }
+		    }
 		}
 
 
+		/* CHECK WIN */	
 
 		function isWin () {
 
