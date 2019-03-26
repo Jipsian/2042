@@ -3,14 +3,17 @@
 	$.fn.game = function() {
 
 		var win = false;
+		var round = 1;
 
+		var size = $('#select option:selected').val();
+		console.log("size", size);
 
 		/* CREATE / REFRESH GRID */
 
 		$('#select option').on("click", function() {
 			size = $(this).val();
 			refreshGrid(size);
-		})
+		});
 
 		function createGrid (size) {
 		    for (var rows = 0; rows < size; rows++) {
@@ -26,7 +29,7 @@
 		    $(".grid").height(value);
 		    $(".grid").css("fontSize", (fontSize/size));
 		    initNumbers(size);	
-		};
+		}
 
 		$("#container").on("click", ".grid", function () {
 		    console.log($(this).position());	
@@ -68,47 +71,96 @@
 
 			$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(firstNumber);
 
-			if (firstPosition != thirdPosition && secondPosition != fourthPosition) {
+			if (firstPosition != thirdPosition || secondPosition != fourthPosition) {
 				$(".grid[x='" + thirdPosition + "'][y='" + fourthPosition + "'] span").text(secondNumber);	
-			} else if (firstPosition == thirdPosition && secondPosition != fourthPosition) {
-				if (thirdPosition == 0) {
-					thirdPosition = thirdPosition + 1;		
-				} else if (thirdPosition == 4){
-					thirdPosition = thirdPosition - 1;
-				} else {
-					thirdPosition = thirdPosition + 1;
+			} else {
+				if (firstPosition == thirdPosition) {
+					thirdPosition++;
+					if (thirdPosition == 0) {
+						$(".grid[x='1'][y='" + fourthPosition + "'] span").text(secondNumber);	
+					} else if (thirdPosition == 4) {
+						$(".grid[x='3'][y='" + fourthPosition + "'] span").text(secondNumber);	
+					} else {
+						$(".grid[x='" + thirdPosition + "'][y='" + fourthPosition + "'] span").text(secondNumber);	
+					}
+				} else if (secondPosition == fourthPosition) {
+					fourthPosition++;
+					if (fourthPosition == 0) {	
+						$(".grid[x='" + thirdPosition + "'][y='1'] span").text(secondNumber);		
+					} else if (fourthPosition == 4) {
+						$(".grid[x='" + thirdPosition + "'][y='3'] span").text(secondNumber);		
+					} else {
+						$(".grid[x='" + thirdPosition + "'][y='" + fourthPosition + "'] span").text(secondNumber);		
+					}
 				}
-				$(".grid[x='" + thirdPosition + "'][y='" + fourthPosition + "'] span").text(secondNumber);	
-			} else if (firstPosition != thirdPosition && secondPosition == fourthPosition) {
-				if (fourthPosition == 0) {
-					fourthPosition = fourthPosition + 1;		
-				} else if (fourthPosition == 4){
-					fourthPosition = fourthPosition - 1;
-				} else {
-					fourthPosition = fourthPosition + 1;
-				}
-				$(".grid[x='" + thirdPosition + "'][y='" + fourthPosition + "'] span").text(secondNumber);	
 			}
 		}
+
+
+		/* LISTEN EVENTS */
+
+		$(document).keydown(function (e) {
+		    if (e.which == 37) { // GO LEFT BITCH
+		       	addNumber(size);
+		    } else if (e.which == 38) { // GO UP BITCH
+		    	addNumber(size);
+		    } else if (e.which == 39) { // GO RIGHT BITCH
+		    	addNumber(size);
+		    } else if (e.which == 40) { // GO DOWN BITCH
+				addNumber(size);
+		    }
+		});
+
+
+		/* ADD NUMBER WHEN MOVING */
+
+		function addNumber (size) {
+			var two = 2;
+			var four = 4;
+			var firstPosition = Math.round(Math.random() * (size - 1));
+			var secondPosition = Math.round(Math.random() * (size - 1));
+			
+			if (round == 1) {
+				if ($(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text() == "") {
+					$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(two);
+					round++;
+				} else {
+					addNumber(size);
+				}
+			} else {
+				if (Math.random() >= 0.66) {
+					if ($(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text() == "") {
+						$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(four);
+						round++;
+					} else {
+						addNumber(size);
+					}
+				} else {
+					if ($(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text() == "") {
+						$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(two);
+						round++;
+					} else {
+						addNumber(size);
+					}
+				}
+			}
+		}
+
+
+		/* MOVE GRID */
 
 		function moveGrid () {
 
 		}
 
-		function addNumber (size) {
-			var countTwo = 0;	
-			var countFour = 0;
-			var two = 2;
-			var four = 4;
-			var dice = Math.random();
-			var firstPosition = Math.round(Math.random() * (size - 1));
-			var secondPosition = Math.round(Math.random() * (size - 1));
-			if ()
-		}
+
+		/* BLOCK COLOR DEPENDING ON NUMBER */
 
 		function addColorsToBlock () {
 
 		}
+
+
 
 		function isWin () {
 
