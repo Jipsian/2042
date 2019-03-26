@@ -1,0 +1,38 @@
+#container {
+	border: none;
+	font-size: 0;
+	height: 480px;
+	margin: auto;
+	outline: 2px solid #000;
+	padding: 0;
+	position: relative;
+	top: 30px;
+	width: 480px;
+}
+
+.grid {
+	border: none;
+	display: inline-block;
+	margin: 0;
+	outline: 1px solid #000;
+	padding: 0;
+	position: relative;
+}
+
+.grid span {
+	font-weight: bold;
+	height: auto;
+	width: auto;
+	left: 40%;
+	position: absolute;
+	top: calc(60% - 30px);
+}
+
+/*.cell {
+	border: none;
+	background-color: red;
+	display: inline-block;
+	margin: 0;
+	outline: 1px solid #000;
+	padding: 0;
+}*/
