@@ -11,7 +11,8 @@
 
 
 		/* INIT SCORE */
-		$('p span').text(score);	
+
+		$('#score span').text(score);	
 
 
 		/* CREATE / REFRESH GRID */
@@ -19,6 +20,8 @@
 		$('#select option').on("click", function() {
 			size = $(this).val();
 			refreshGrid();
+			score = 0;
+			$('#score span').text(score);
 		});
 
 		function createGrid () {
@@ -34,7 +37,6 @@
 		    $(".grid").width(value);
 		    $(".grid span").width(value);
 		    $(".grid").height(value);
-		    $(".grid span").height(value);
 		    $(".grid").css("fontSize", (fontSize/size));
 		    initNumbers();	
 		}
@@ -57,6 +59,10 @@
 		/*RELOAD*/
 
 		$("#newGame").on("click", function () {
+			location.reload();
+		});		
+
+		$(".replay").on("click", function () {
 			location.reload();
 		});
 
@@ -145,6 +151,9 @@
 		       	isItGG();
 		    }			
 		});
+
+
+		/*MUSIC*/
 
 
 		/* ADD NUMBER WHEN MOVING */
@@ -316,7 +325,7 @@
 				    }
 			    }
 			}
-			$('p span').text(score);
+			$('#score span').text(score);
 		}
 
 		/* BLOCK COLOR DEPENDING ON NUMBER */
@@ -331,7 +340,7 @@
 		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "8")) {
 		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffff00");		        		
 		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "16")) {
-		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffcc00");
+		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ffff33");
 		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "32")) {
 		            	$(".grid[x='" + columns + "'][y='" + rows + "']").css("backgroundColor", "#ff9900");
 		        	} else if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "64")) {
@@ -360,7 +369,7 @@
 			for (var rows = 0; rows < size; rows++) {
 		        for (var columns = 0; columns < size; columns++) {
 		             if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == 2048) {
-		             	alert("Victoire !");
+		             	$('#win').css("display", "inline");
 		             }
 		        }
 		    }
@@ -370,7 +379,6 @@
 		/* CHECK LOOSE */
 
 		function isItLoose () {
-
 			count = 0;
 
 			for (var rows = 0; rows < size; rows++) {
@@ -380,7 +388,6 @@
 		            } 
 		        }
 			}
-
 			for (var rows = 0; rows < size; rows++) {
 				for (var columns = 0; columns < size; columns++) {
 	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
@@ -388,7 +395,6 @@
 	            	}
 			    }
 		    }
-
 	    	for (var columns = 0; columns < size; columns++) {
 				for (var rows = 0; rows < size; rows++) {
 	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
@@ -396,7 +402,6 @@
 	            	}
 			    }
 		    }
-
 			for (var columns = size - 1; columns >= 0; columns--) {
 				for (var rows = size - 1; rows >= 0; rows--) {
 	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
@@ -404,7 +409,6 @@
 	            	}
 			    }
 		    }
-
 	    	for (var rows = size - 1; rows >= 0; rows--) {
 				for (var columns = size - 1; columns >= 0; columns--) {
 	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
@@ -412,15 +416,13 @@
 	            	}
 			    }
 		    }
-
 		    if (count == 0) {
-		    	alert("Perdu...");
+		    	$('#loose').css("display", "inline");
 		    }
 
 		}
 
 		function isItFull () {
-
 			var count = 0;
 
 			for (var rows = 0; rows <= size; rows++) {
@@ -435,7 +437,6 @@
 		    	isFull = true;
 		    }
 		}
-
 
 	};
 })(jQuery);
