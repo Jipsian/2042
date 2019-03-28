@@ -18,10 +18,10 @@
 
 		$('#select option').on("click", function() {
 			size = $(this).val();
-			refreshGrid(size);
+			refreshGrid();
 		});
 
-		function createGrid (size) {
+		function createGrid () {
 		    for (var rows = 0; rows < size; rows++) {
 		        for (var columns = 0; columns < size; columns++) {
 		            $("#container").append("<div class='grid' x='" + columns + "' y='" + rows + "'><span></span></div>");
@@ -36,14 +36,14 @@
 		    $(".grid").height(value);
 		    $(".grid span").height(value);
 		    $(".grid").css("fontSize", (fontSize/size));
-		    initNumbers(size);	
+		    initNumbers();	
 		}
 
 		function clearGrid () {
 		    $(".grid").remove();
 		};
 
-		function refreshGrid (size) {
+		function refreshGrid () {
 		    clearGrid();
 		    createGrid(size);
 		};
@@ -63,7 +63,7 @@
 
 		/* FIRST VALUES */
 
-		function initNumbers (size) {
+		function initNumbers () {
 			size = $("#select option:selected").val();
 			var firstNumber = 2;
 			var secondNumber = 4;
@@ -97,7 +97,7 @@
 					}
 				}
 			}
-			addColorsToBlock(size);
+			addColorsToBlock();
 		}
 
 
@@ -108,59 +108,60 @@
 				isAddable = false;
 			}
 		    if (e.which == 37) { // GO LEFT BITCH
-		       	moveGrid(size, e.which);
-		       	handleCollisions(size, e.which);
-		       	moveGrid(size, e.which);
-		       	isItFull(size);
-		       	addNumber(size);
-		       	addColorsToBlock(size);
-		       	isItLoose(size);
-		       	isItGG(size);
+		       	moveGrid(e.which);
+		       	handleCollisions(e.which);
+		       	moveGrid(e.which);
+		       	isItFull();
+		       	addNumber();
+		       	addColorsToBlock();
+		       	isItLoose();
+		       	isItGG();
 		    } else if (e.which == 38) { // GO UP BITCH
-		    	moveGrid(size, e.which);
-		    	handleCollisions(size, e.which);
-		    	moveGrid(size, e.which);
-		    	isItFull(size);
-		    	addNumber(size);
-		    	addColorsToBlock(size);
-		    	isItLoose(size);
-		    	isItGG(size);
+		       	moveGrid(e.which);
+		       	handleCollisions(e.which);
+		       	moveGrid(e.which);
+		       	isItFull();
+		       	addNumber();
+		       	addColorsToBlock();
+		       	isItLoose();
+		       	isItGG();
 		    } else if (e.which == 39) { // GO RIGHT BITCH
-		    	moveGrid(size, e.which);
-		    	handleCollisions(size, e.which);
-		    	moveGrid(size, e.which);
-		    	isItFull(size);
-		    	addNumber(size);
-		    	addColorsToBlock(size);
-		    	isItLoose(size);
-		    	isItGG(size);
+		       	moveGrid(e.which);
+		       	handleCollisions(e.which);
+		       	moveGrid(e.which);
+		       	isItFull();
+		       	addNumber();
+		       	addColorsToBlock();
+		       	isItLoose();
+		       	isItGG();
 		    } else if (e.which == 40) { // GO DOWN BITCH
-				moveGrid(size, e.which);
-				handleCollisions(size, e.which);
-				moveGrid(size, e.which);
-				isItFull(size);
-				addNumber(size);
-				addColorsToBlock(size);
-				isItLoose(size);
-				isItGG(size);
+		       	moveGrid(e.which);
+		       	handleCollisions(e.which);
+		       	moveGrid(e.which);
+		       	isItFull();
+		       	addNumber();
+		       	addColorsToBlock();
+		       	isItLoose();
+		       	isItGG();
 		    }			
 		});
 
 
 		/* ADD NUMBER WHEN MOVING */
 
-		function addNumber (size) {
+		function addNumber () {
 			var two = 2;
 			var four = 4;
 			var firstPosition = Math.round(Math.random() * (size - 1));
 			var secondPosition = Math.round(Math.random() * (size - 1));
+			var elem = (".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span");
 			
 			if (round == 1) {
 				if ($(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text() == "") {
 					$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(two);
 					round++;
 				} else {
-					addNumber(size);
+					addNumber();
 				}
 			} else {
 				if (isAddable == true && isFull == false) {
@@ -169,14 +170,14 @@
 							$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(four);
 							round++;
 						} else {
-							addNumber(size);
+							addNumber();
 						}
 					} else {
 						if ($(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text() == "") {
 							$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(two);
 							round++;
 						} else {
-							addNumber(size);
+							addNumber();
 						}
 					}				
 				}
@@ -186,7 +187,7 @@
 
 		/* MOVE GRID */
 
-		function moveGrid (size, direction) {
+		function moveGrid (direction) {
 			if (direction == 37) { // LEFT BITCH
 				for (var rows = 0; rows < size; rows++) {
 					for (var columns = 0; columns < size; columns++) {
@@ -249,7 +250,7 @@
 
 		/* HANDLE COLLISIONS */
 
-		function handleCollisions (size, direction) {
+		function handleCollisions (direction) {
 			if (direction == 37) { // LEFT BITCH
 				for (var rows = 0; rows < size; rows++) {
 					for (var columns = 0; columns < size; columns++) {
@@ -320,7 +321,7 @@
 
 		/* BLOCK COLOR DEPENDING ON NUMBER */
 
-		function addColorsToBlock (size) {
+		function addColorsToBlock () {
 			for (var rows = 0; rows < size; rows++) {
 		        for (var columns = 0; columns < size; columns++) {
 		        	if (($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "2")) {
@@ -355,7 +356,7 @@
 
 		/* CHECK WIN */	
 
-		function isItGG (size) {
+		function isItGG () {
 			for (var rows = 0; rows < size; rows++) {
 		        for (var columns = 0; columns < size; columns++) {
 		             if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == 2048) {
@@ -368,7 +369,7 @@
 
 		/* CHECK LOOSE */
 
-		function isItLoose (size) {
+		function isItLoose () {
 
 			count = 0;
 
@@ -418,7 +419,7 @@
 
 		}
 
-		function isItFull (size) {
+		function isItFull () {
 
 			var count = 0;
 
@@ -433,7 +434,6 @@
 		   	if (count == 0) {
 		    	isFull = true;
 		    }
-		    console.log(isFull)
 		}
 
 
