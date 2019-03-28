@@ -2,11 +2,17 @@
 
 	$.fn.game = function() {
 
-		var isWin = false;
 		var round = 1;
-		var idAddable = true;
+		var isAddable = true;
+		var isFull = false;
+		var score = 0;
 
 		var size = $('#select option:selected').val();
+
+
+		/* INIT SCORE */
+		$('p span').text(score);	
+
 
 		/* CREATE / REFRESH GRID */
 
@@ -26,7 +32,9 @@
 		    fontSize = 120;
 
 		    $(".grid").width(value);
+		    $(".grid span").width(value);
 		    $(".grid").height(value);
+		    $(".grid span").height(value);
 		    $(".grid").css("fontSize", (fontSize/size));
 		    initNumbers(size);	
 		}
@@ -96,31 +104,46 @@
 		/* LISTEN EVENTS */
 
 		$(document).keydown(function (e) {
+			if (round >= 2) {
+				isAddable = false;
+			}
 		    if (e.which == 37) { // GO LEFT BITCH
 		       	moveGrid(size, e.which);
 		       	handleCollisions(size, e.which);
+		       	moveGrid(size, e.which);
+		       	isItFull(size);
 		       	addNumber(size);
 		       	addColorsToBlock(size);
+		       	isItLoose(size);
 		       	isItGG(size);
 		    } else if (e.which == 38) { // GO UP BITCH
 		    	moveGrid(size, e.which);
 		    	handleCollisions(size, e.which);
+		    	moveGrid(size, e.which);
+		    	isItFull(size);
 		    	addNumber(size);
 		    	addColorsToBlock(size);
+		    	isItLoose(size);
 		    	isItGG(size);
 		    } else if (e.which == 39) { // GO RIGHT BITCH
 		    	moveGrid(size, e.which);
 		    	handleCollisions(size, e.which);
+		    	moveGrid(size, e.which);
+		    	isItFull(size);
 		    	addNumber(size);
 		    	addColorsToBlock(size);
+		    	isItLoose(size);
 		    	isItGG(size);
 		    } else if (e.which == 40) { // GO DOWN BITCH
 				moveGrid(size, e.which);
 				handleCollisions(size, e.which);
+				moveGrid(size, e.which);
+				isItFull(size);
 				addNumber(size);
 				addColorsToBlock(size);
+				isItLoose(size);
 				isItGG(size);
-		    }
+		    }			
 		});
 
 
@@ -140,7 +163,7 @@
 					addNumber(size);
 				}
 			} else {
-				if (isAddable == true) {
+				if (isAddable == true && isFull == false) {
 					if (Math.random() >= 0.66) {
 						if ($(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text() == "") {
 							$(".grid[x='" + firstPosition + "'][y='" + secondPosition + "'] span").text(four);
@@ -173,6 +196,7 @@
 								$(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text(temp);
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
 								columns = 0;
+								isAddable = true;
 			            	}
 			            }
 				    }
@@ -186,33 +210,35 @@
 								$(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text(temp);
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
 								rows = 0;
+								isAddable = true;
 			            	}
 			            }
 				    }
 			    }
 			} else if (direction == 39 ) { // RIGHT BITCH
-				for (var rows = 3; rows >= 0; rows--) {
-					for (var columns = 3; columns >= 0; columns--) {
+				for (var rows = size - 1; rows >= 0; rows--) {
+					for (var columns = size - 1; columns >= 0; columns--) {
 						if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "") {
 			            	if ($(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").length && $(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text() == "") {
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								$(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text(temp);
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
-								columns = 3;
+								columns = size - 1;
+								isAddable = true;
 			            	}
 			            }
 				    }
 				}
 			} else if (direction == 40 ) { // DOWN BITCH
-				console.log("ok");
-				for (var columns = 3; columns >= 0; columns--) {
-					for (var rows = 3; rows >= 0; rows--) {
+				for (var columns = size - 1; columns >= 0; columns--) {
+					for (var rows = size - 1; rows >= 0; rows--) {
 						if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "") {
 			            	if ($(".grid[x='" + columns + "'][y='" + (rows + 1)+ "'] span").length && $(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text() == "") {
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								$(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text(temp);
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
-								rows = 3;
+								rows = size - 1;
+								isAddable = true;
 			            	}
 			            }
 				    }
@@ -231,9 +257,11 @@
 			            	if ($(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
+								score = score + temp;
 								$(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text("");
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
 								columns = 0;
+								isAddable = true;
 			            	}
 			            }
 				    }
@@ -245,42 +273,49 @@
 			            	if ($(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
+								score = score + temp;
 								$(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text("");
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
 								rows = 0;
+								isAddable = true;
 			            	}
 			            }
 				    }
 			    }
 			} else if (direction == 39 ) { // RIGHT BITCH
-				for (var rows = 3; rows >= 0; rows--) {
-					for (var columns = 3; columns >= 0; columns--) {
+				for (var rows = size - 1; rows >= 0; rows--) {
+					for (var columns = size - 1; columns >= 0; columns--) {
 						if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "") {
 			            	if ($(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
+								score = score + temp;
 								$(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text("");
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
-								columns = 3;
+								columns = size - 1;
+								isAddable = true;
 			            	}
 			            }
 				    }
 			    }
 			} else if (direction == 40 ) { // DOWN BITCH
-				for (var columns = 3; columns >= 0; columns--) {
-					for (var rows = 3; rows >= 0; rows--) {
+				for (var columns = size - 1; columns >= 0; columns--) {
+					for (var rows = size - 1; rows >= 0; rows--) {
 						if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "") {
 			            	if ($(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
+								score = score + temp;
 								$(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text("");
 								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
-								rows = 3;
+								rows = size - 1;
+								isAddable = true;
 			            	}
 			            }
 				    }
 			    }
 			}
+			$('p span').text(score);
 		}
 
 		/* BLOCK COLOR DEPENDING ON NUMBER */
@@ -323,12 +358,84 @@
 		function isItGG (size) {
 			for (var rows = 0; rows < size; rows++) {
 		        for (var columns = 0; columns < size; columns++) {
-		             if ($(".grid[x='" + columns + "'][y='" + rows + "']").text() == 2048) {
+		             if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == 2048) {
 		             	alert("Victoire !");
 		             }
 		        }
 		    }
 		}
+
+
+		/* CHECK LOOSE */
+
+		function isItLoose (size) {
+
+			count = 0;
+
+			for (var rows = 0; rows < size; rows++) {
+		        for (var columns = 0; columns < size; columns++) {
+		            if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "") {
+		             	count++;
+		            } 
+		        }
+			}
+
+			for (var rows = 0; rows < size; rows++) {
+				for (var columns = 0; columns < size; columns++) {
+	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
+	            		count++;
+	            	}
+			    }
+		    }
+
+	    	for (var columns = 0; columns < size; columns++) {
+				for (var rows = 0; rows < size; rows++) {
+	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
+	            		count++;
+	            	}
+			    }
+		    }
+
+			for (var columns = size - 1; columns >= 0; columns--) {
+				for (var rows = size - 1; rows >= 0; rows--) {
+	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
+	            		count++;
+	            	}
+			    }
+		    }
+
+	    	for (var rows = size - 1; rows >= 0; rows--) {
+				for (var columns = size - 1; columns >= 0; columns--) {
+	            	if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() != "" && $(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text() == $(".grid[x='" + columns + "'][y='" + rows + "'] span").text()) {
+						count++;
+	            	}
+			    }
+		    }
+
+		    if (count == 0) {
+		    	alert("Perdu...");
+		    }
+
+		}
+
+		function isItFull (size) {
+
+			var count = 0;
+
+			for (var rows = 0; rows <= size; rows++) {
+		        for (var columns = 0; columns <= size; columns++) {
+		            if ($(".grid[x='" + columns + "'][y='" + rows + "'] span").text() == "") {
+		             	count++;
+		            } 
+		        }
+			}
+
+		   	if (count == 0) {
+		    	isFull = true;
+		    }
+		    console.log(isFull)
+		}
+
 
 	};
 })(jQuery);
