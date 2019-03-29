@@ -217,3 +217,16 @@ select option {
 	color: #990000;
 	margin-right: 10px;
 }
+
+select:focus {
+ outline: none;
+ -moz-outline: none;
+}
+option:focus {
+ outline: none;
+ -moz-outline: none;
+}
+button:focus {
+ outline: none;
+ -moz-outline: none;
+}

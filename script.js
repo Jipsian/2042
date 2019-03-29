@@ -102,7 +102,6 @@
 		/* LISTEN EVENTS */
 
 		$(document).keydown(function (e) {
-			console.log(round);
 			if (round >= 2) {
 				isAddable = false;
 			}
@@ -283,9 +282,8 @@
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
 								score = score + temp;
-								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
-								$(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text("");
-								columns = 0;
+								$(".grid[x='" + (columns - 1) + "'][y='" + rows + "'] span").text(temp);
+								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
 								isAddable = true;
 			            	}
 			            }
@@ -299,9 +297,8 @@
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
 								score = score + temp;
-								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
-								$(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text("");
-								rows = 0;
+								$(".grid[x='" + columns + "'][y='" + (rows - 1) + "'] span").text(temp);
+								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
 								isAddable = true;
 			            	}
 			            }
@@ -315,9 +312,8 @@
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
 								score = score + temp;
-								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
-								$(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text("");
-								columns = size - 1;
+								$(".grid[x='" + (columns + 1) + "'][y='" + rows + "'] span").text(temp);
+								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
 								isAddable = true;
 			            	}
 			            }
@@ -331,9 +327,8 @@
 								var temp = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 								temp = temp * 2;
 								score = score + temp;
-								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(temp);
-								$(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text("");
-								rows = size - 1;
+								$(".grid[x='" + columns + "'][y='" + (rows + 1) + "'] span").text(temp);
+								$(".grid[x='" + columns + "'][y='" + rows + "'] span").text("");
 								isAddable = true;
 			            	}
 			            }
@@ -418,7 +413,6 @@
 		        	array[rows][columns] = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
 		        }
 		    }
-		    console.log(array);
 		}
 
 		$("#undo").on("click", function () {
