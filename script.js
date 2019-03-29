@@ -343,6 +343,7 @@
 			$('#score span').text(score);
 		}
 
+
 		/* BLOCK COLOR DEPENDING ON NUMBER */
 
 		function addColorsToBlock () {
@@ -395,6 +396,7 @@
 		        }
 		    }
 		}
+
 
 		/* CREATE ARRAY */
 

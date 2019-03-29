@@ -18,13 +18,13 @@ h1 {
 }
 
 #win span {
-	display: block;
 	animation: BGzoom 2s linear infinite;
+	display: block;
 }
 
 #loose span {
-	display: block;
 	animation: MGzoom 2s linear infinite;
+	display: block;
 }
 
 .replay {
@@ -39,23 +39,12 @@ h1 {
 	height: 30px;
 }
 
-#loose {
-	color: #990000;
-	display: none;
-	font-family: 'Bungee Inline', cursive;
-	font-size: 35px;
-	left: 51.75%;
-	position: absolute;
-	top: 1%;
-  
-}
-
 @keyframes BGzoom {
     0% {
         transform: scale(1);
     }
     50% {
-       transform: scale(1.2);
+       transform: scale(1.1);
     }
     100% {
         transform: scale(1);
@@ -72,6 +61,17 @@ h1 {
     100% {
         transform: scale(1);
     }
+}
+
+#loose {
+	color: #990000;
+	display: none;
+	font-family: 'Bungee Inline', cursive;
+	font-size: 35px;
+	left: 51.75%;
+	position: absolute;
+	top: 1%;
+  
 }
 
 #head {
@@ -203,8 +203,8 @@ select option {
 	font-weight: bold;
 	height: auto;
 	position: absolute;
-	top: 35%;
 	text-align: center;
+	top: 35%;
 	transition: all 1s;
 }
 
