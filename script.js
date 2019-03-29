@@ -8,12 +8,7 @@
 		var score = 0;
 		var bestScore = 0;
 
-		if (parseInt(localStorage.getItem("bestScore")) != 0) {
-			bestScore = localStorage.getItem("bestScore");
-		} else {
-			bestScore = 0;	
-		}
-
+		bestScore = localStorage.getItem("bestScore");
 
 		var size = $('#select option:selected').val();
 
@@ -34,7 +29,8 @@
 		    $(".grid span").width(value);
 		    $(".grid").height(value);
 		    $(".grid").css("fontSize", (fontSize/size));
-		    initNumbers();	
+		    initNumbers();
+		    createArray();	
 		}
 
 		function clearGrid () {
@@ -111,6 +107,7 @@
 				isAddable = false;
 			}
 		    if (e.which == 37) { // GO LEFT BITCH
+		       	createArray();
 		       	moveGrid(e.which);
 		       	handleCollisions(e.which);
 		       	moveGrid(e.which);
@@ -120,6 +117,7 @@
 		       	isItLoose();
 		       	isItGG();
 		    } else if (e.which == 38) { // GO UP BITCH
+		       	createArray();
 		       	moveGrid(e.which);
 		       	handleCollisions(e.which);
 		       	moveGrid(e.which);
@@ -129,6 +127,7 @@
 		       	isItLoose();
 		       	isItGG();
 		    } else if (e.which == 39) { // GO RIGHT BITCH
+		       	createArray();
 		       	moveGrid(e.which);
 		       	handleCollisions(e.which);
 		       	moveGrid(e.which);
@@ -138,6 +137,7 @@
 		       	isItLoose();
 		       	isItGG();
 		    } else if (e.which == 40) { // GO DOWN BITCH
+		       	createArray();
 		       	moveGrid(e.which);
 		       	handleCollisions(e.which);
 		       	moveGrid(e.which);
@@ -148,9 +148,6 @@
 		       	isItGG();
 		    }			
 		});
-
-
-		/*MUSIC*/
 
 
 		/* ADD NUMBER WHEN MOVING */
@@ -194,7 +191,6 @@
 				}
 			}
 		}
-
 
 		function isItFull () {
 			var count = 0;
@@ -400,6 +396,40 @@
 		    }
 		}
 
+		/* CREATE ARRAY */
+
+		function create2DArray(numRows, numColumns) {
+			let array = new Array(numRows); 
+		 
+			for(let i = 0; i <= numColumns; i++) {
+				array[i] = new Array(numColumns); 
+			}
+		 
+			return array; 
+		}
+		 
+		var array = create2DArray(size, size); 
+
+		function createArray () {
+			for (var rows = 0; rows < size; rows++) {
+		        for (var columns = 0; columns < size; columns++) {
+		        	array[rows][columns] = $(".grid[x='" + columns + "'][y='" + rows + "'] span").text();
+		        }
+		    }
+		    console.log(array);
+		}
+
+		$("#undo").on("click", function () {
+			for (var rows = 0; rows < size; rows++) {
+		        for (var columns = 0; columns < size; columns++) {
+					$(".grid[x='" + columns + "'][y='" + rows + "'] span").text(array[rows][columns]);
+		        }
+		    }
+		    createArray();
+		    addColorsToBlock();
+		    round--;		
+		});
+
 
 		/* CHECK LOOSE */
 
@@ -460,6 +490,7 @@
 		var bravo = new Audio("audio/cheering.wav");
 		var drip = new Audio("audio/drip.wav");
 		drip.volume = 0.05;
+		cry.volume = 0.8;
 
 
 		/* INIT SCORE */

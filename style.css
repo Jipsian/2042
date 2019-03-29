@@ -83,7 +83,7 @@ h1 {
 #createGame {
 	height: 20px;
 	margin-bottom: 30px;
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 #newGame {
@@ -166,13 +166,15 @@ select option {
 }
 
 #score span {
+	color: #990000;
 	margin-left: 20px;
 	width: 50%;
 }
 
 #bestScore span {
-	margin-left: 20px;
+	color: #990000;
 	float: right;
+	margin-left: 20px;
 }
 
 #container {
@@ -181,10 +183,9 @@ select option {
 	font-size: 0;
 	height: 480px;
 	margin: 0 auto;
-	outline: 0px solid #ffcc00;
 	padding: 0;
 	position: relative;
-	top: 30px;
+	top: 10px;
 	width: 480px;
 }
 
@@ -195,7 +196,6 @@ select option {
 	outline: 2.5px solid #ffcc00;
 	padding: 0;
 	position: relative;
-	transition: all 0.1s;
 }
 
 .grid span {
@@ -205,5 +205,15 @@ select option {
 	position: absolute;
 	top: 35%;
 	text-align: center;
-	transition: all 0.25s;
+	transition: all 1s;
+}
+
+#undo {
+	cursor: grab;
+	margin-top: 5px;
+}
+
+#undo i {
+	color: #990000;
+	margin-right: 10px;
 }
