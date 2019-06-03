@@ -12,6 +12,7 @@
 
 		var size = $('#select option:selected').val();
 
+		$("div.b:first-child");
 
 		/* CREATE / REFRESH GRID */
 
@@ -53,7 +54,6 @@
 		$("#newGame").on("click", function () {
 			location.reload();
 		});		
-
 		$(".replay").on("click", function () {
 			location.reload();
 		});
